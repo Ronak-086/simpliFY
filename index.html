@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SimpleSage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .font-space-grotesk {
+      font-family: 'Space Grotesk', sans-serif !important;
+    }
+    .body{
+      background-color: #212121;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-gray-800 relative overflow-x-hidden body">
+
+  <!-- Animated Background Blobs -->
+  <div class="pointer-events-none fixed -z-10 inset-0 opacity-70">
+    <div class="absolute left-[-120px] top-[10%] w-[340px] h-[340px] bg-pink-200 mix-blend-multiply rounded-full blur-2xl floaty"></div>
+    <div class="absolute right-[-100px] bottom-[15%] w-[320px] h-[320px] bg-blue-100 mix-blend-multiply rounded-full blur-2xl"></div>
+    <div class="absolute left-[50%] top-[60%] w-[260px] h-[260px] bg-purple-200 mix-blend-multiply rounded-full blur-2xl"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="pt-12 pb-10 flex flex-col items-center select-none">
+    <span class="mb-4 floaty">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-pink-400 drop-shadow-2xl" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <ellipse cx="8.5" cy="12" rx="7" ry="8" fill="#f9fafb"></ellipse>
+        <ellipse cx="15.5" cy="12" rx="7" ry="8" fill="#f3e8ff"></ellipse>
+        <path stroke="#f472b6" stroke-width="1.5" d="M12 4c2 0 4-1 5 2 1 3-1 5-1 5"></path>
+      </svg>
+    </span>
+    <h1 class="text-4xl md:text-5xl font-extrabold rainbow-text tracking-tight mb-2 text-center drop-shadow-sm">
+      SimpleSage
+    </h1>
+    <p class="text-lg text-gray-600 text-center max-w-xs font-medium">
+      Turning tricky things into <span class="text-pink-400">easy</span> things.
+    </p>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col items-center px-4">
+    <div id="main-card" class="glass w-full max-w-2xl flex flex-col gap-8 pt-10 pb-10 px-6 md:px-14 rounded-3xl shadow-xl border border-purple-100/60 transition-all duration-700">
+      
+      <!-- Input Form -->
+      <form id="simplify-form" class="flex flex-col gap-5" autocomplete="off">
+        <label for="topic" class="sr-only">Topic Input</label>
+        <textarea id="topic" class="resize-none rounded-2xl border border-pink-200 focus:border-blue-300 focus:ring-2 focus:ring-pink-200 transition w-full min-h-[104px] p-4 text-lg bg-white/70 placeholder-gray-400 shadow-inner" placeholder="Paste a complex concept, sentence, or topic here..." required></textarea>
+
+        <div class="flex flex-col sm:flex-row gap-4 items-stretch">
+          <label for="level" class="sr-only">Comprehension Level</label>
+          <select id="level" class="rounded-2xl border border-blue-200 bg-white/60 px-4 py-2 text-base text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-pink-300 transition w-full sm:w-48 shadow" required>
+            <option value="5-year-old">5-year-old</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Expert">Expert</option>
+          </select>
+          <button id="simplify-btn" type="submit" class="flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-tr from-pink-400 via-blue-400 to-pink-400 glow hover:from-blue-400 hover:via-pink-400 hover:to-blue-400 active:scale-95 text-white text-lg font-bold px-7 py-3 transition-all duration-200 shadow-lg tracking-wide">
+            <span>Simplify it!</span>
+            <svg id="loading-spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-70" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Result Display -->
+      <section id="result-section" class="hidden">
+        <div class="fade-in-up bg-white/90 rounded-2xl border border-blue-100 shadow-xl p-6 mb-5 text-gray-800 glass">
+          <h2 class="text-lg font-bold mb-3 rainbow-text flex items-center gap-2">
+            <svg class="h-6 w-6 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M13 16h-1v-4h-1m4 4v-1a4 4 0 10-8 0v1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 20h.01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Simplified Explanation
+          </h2>
+          <p id="result-text" class="text-xl leading-relaxed font-medium"></p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button id="copy-btn" class="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 hover:from-blue-200 hover:to-pink-100 text-blue-800 rounded-xl px-4 py-2 font-semibold transition shadow hover:scale-105">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <rect x="8" y="8" width="8" height="8" rx="2" stroke-width="2" stroke="currentColor"></rect>
+              <path d="M16 8V6a2 2 0 00-2-2H8a2 2 0 00-2 2v8a2 2 0 002 2h2" stroke-width="2" stroke="currentColor"></path>
+            </svg>
+            Copy
+          </button>
+
+          <button id="share-btn" class="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-100 via-green-200 to-green-100 hover:from-green-200 hover:to-blue-100 text-green-800 rounded-xl px-4 py-2 font-semibold transition shadow hover:scale-105">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M15 8a3 3 0 11-6 0 3 3 0 016 0zm-7 7a3 3 0 016 0m-6 0a6 6 0 1112 0v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1a6 6 0 016-6zm6 0v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Share
+          </button>
+
+          <button id="reset-btn" class="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-pink-100 via-pink-200 to-pink-100 hover:from-pink-200 hover:to-blue-100 text-pink-800 rounded-xl px-4 py-2 font-semibold transition shadow hover:scale-105">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M19 7a7 7 0 00-7-7 7 7 0 00-7 7v9a5 5 0 005 5 5 5 0 005-5v-1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M17 17l4-4m0 0l-4-4m4 4H9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Try Another
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <!-- <footer class="py-8 text-center text-gray-400 text-sm select-none z-10 relative">
+    <span class="inline-block align-middle animate-pulse">✨</span> Built with <span class="rainbow-text font-bold">AI</span> magic &middot; <a href="#" class="underline hover:text-blue-400">Get Inspired</a>
+  </footer> -->
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+</html>

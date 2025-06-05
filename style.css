@@ -1,0 +1,36 @@
+body {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      background: 
+                  radial-gradient(circle at 70% 10%, #f0abfc 10%, transparent 60%), 
+                  radial-gradient(circle at 20% 80%, #7dd3fc 10%, transparent 65%),
+                  linear-gradient(120deg, #f0fdfa 0%, #ede9fe 100%);
+    }
+    .glass {
+      backdrop-filter: blur(24px) saturate(180%);
+      background: rgba(255,255,255,0.40);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      box-shadow: 0 8px 40px 0 rgba(168,85,247,0.10);
+    }
+    .glow {
+      box-shadow: 0 0 20px 2px #f472b6, 0 2px 6px 0 rgba(0,0,0,0.11);
+    }
+    .rainbow-text {
+      background: linear-gradient(90deg, #7dd3fc 10%, #f472b6 70%, #facc15 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    @keyframes floaty {
+      0%, 100% {transform: translateY(0);}
+      50% {transform: translateY(-12px);}
+    }
+    .floaty {
+      animation: floaty 3.2s ease-in-out infinite;
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(32px);}
+      100% {opacity:1; transform:translateY(0);}
+    }
