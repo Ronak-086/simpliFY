@@ -11,7 +11,7 @@ const topicInput = document.getElementById('topic');
 const levelInput = document.getElementById('level');
 
 // Axios + Gemini API Calling Code
-const apiKey = "AIzaSyCUVREy-pl7I97Kjj_5vmZdYYMj1DhOmrU"; // ⚠️ Only expose in safe environments
+const apiKey = ; // ⚠️ Only expose in safe environments
 
 async function simplifyText(text, level) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
